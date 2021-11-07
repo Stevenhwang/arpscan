@@ -1,3 +1,8 @@
+// arpscan implements ARP scanning of all interfaces' local networks using
+// gopacket and its subpackages.  This example shows, among other things:
+//   * Generating and sending packet data
+//   * Reading in packet data and interpreting it
+//   * Use of the 'pcap' subpackage for reading/writing
 package main
 
 import (
@@ -20,6 +25,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	var wg sync.WaitGroup
 	for _, iface := range ifaces {
 		wg.Add(1)
