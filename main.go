@@ -6,6 +6,7 @@
 package main
 
 import (
+	"arpscan/manuf"
 	"bytes"
 	"encoding/binary"
 	"errors"
@@ -123,7 +124,9 @@ func readARP(handle *pcap.Handle, iface *net.Interface, stop chan struct{}) {
 			// Note:  we might get some packets here that aren't responses to ones we've sent,
 			// if for example someone else sends US an ARP request.  Doesn't much matter, though...
 			// all information is good information :)
-			log.Printf("IP %v is at %v", net.IP(arp.SourceProtAddress), net.HardwareAddr(arp.SourceHwAddress))
+			mac := net.HardwareAddr(arp.SourceHwAddress)
+			m := manuf.Search(mac.String())
+			log.Printf("IP %v is at %v: %s", net.IP(arp.SourceProtAddress), net.HardwareAddr(arp.SourceHwAddress), m)
 		}
 	}
 }
